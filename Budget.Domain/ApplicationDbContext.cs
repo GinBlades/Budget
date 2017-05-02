@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Budget.Domain.Models;
 
-namespace Budget.Web.Data
+namespace Budget.Domain
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -10,6 +10,8 @@ namespace Budget.Web.Data
             : base(options)
         {
         }
+
+        public DbSet<AllowanceTask> AllowanceTasks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
