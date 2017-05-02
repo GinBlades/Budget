@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Budget.Web.Models;
-using Budget.Web.Models.AccountViewModels;
-using Budget.Web.Services;
+using Budget.Domain.Models;
+using Budget.Identity.Models.AccountViewModels;
+using Budget.Identity.Services;
 
 namespace Budget.Web.Controllers
 {
@@ -354,8 +350,8 @@ namespace Budget.Web.Controllers
                 return View("Error");
             }
             var userFactors = await _userManager.GetValidTwoFactorProvidersAsync(user);
-            var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            // var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
+            return View(new SendCodeViewModel { Providers = userFactors, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
         //

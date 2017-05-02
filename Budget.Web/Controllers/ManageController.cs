@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Budget.Web.Models;
-using Budget.Web.Models.ManageViewModels;
-using Budget.Web.Services;
+using Budget.Domain.Models;
+using Budget.Identity.Models.ManageViewModels;
+using Budget.Identity.Services;
 
 namespace Budget.Web.Controllers
 {

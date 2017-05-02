@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Budget.Web.Models.ManageViewModels
+namespace Budget.Identity.Models.ManageViewModels
 {
     public class VerifyPhoneNumberViewModel
     {
