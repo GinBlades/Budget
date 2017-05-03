@@ -68,10 +68,11 @@ namespace Budget.Web.Controllers
                     _logger.LogInformation(1, "User logged in.");
                     return RedirectToLocal(returnUrl);
                 }
-                if (result.RequiresTwoFactor)
-                {
-                    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                }
+                // Two Factor authentication disabled
+                //if (result.RequiresTwoFactor)
+                //{
+                //    return RedirectToAction(nameof(SendCode), new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                //}
                 if (result.IsLockedOut)
                 {
                     _logger.LogWarning(2, "User account locked out.");
@@ -88,7 +89,7 @@ namespace Budget.Web.Controllers
             return View(model);
         }
 
-        //
+        /*
         // GET: /Account/Register
         [HttpGet]
         [AllowAnonymous]
@@ -129,7 +130,7 @@ namespace Budget.Web.Controllers
             return View(model);
         }
 
-        //
+        */
         // POST: /Account/Logout
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -140,7 +141,7 @@ namespace Budget.Web.Controllers
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
-        //
+        /*
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
@@ -247,7 +248,7 @@ namespace Budget.Web.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        //
+        */
         // GET: /Account/ForgotPassword
         [HttpGet]
         [AllowAnonymous]
@@ -338,7 +339,7 @@ namespace Budget.Web.Controllers
             return View();
         }
 
-        //
+        /*
         // GET: /Account/SendCode
         [HttpGet]
         [AllowAnonymous]
@@ -439,7 +440,7 @@ namespace Budget.Web.Controllers
             }
         }
 
-        //
+        */
         // GET /Account/AccessDenied
         [HttpGet]
         public IActionResult AccessDenied()

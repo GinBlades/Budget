@@ -67,7 +67,7 @@ namespace Budget.Web.Controllers
             return View(model);
         }
 
-        //
+        /*
         // POST: /Manage/RemoveLogin
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -206,7 +206,7 @@ namespace Budget.Web.Controllers
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
 
-        //
+        */
         // GET: /Manage/ChangePassword
         [HttpGet]
         public IActionResult ChangePassword()
@@ -274,6 +274,7 @@ namespace Budget.Web.Controllers
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
 
+        /*
         //GET: /Manage/ManageLogins
         [HttpGet]
         public async Task<IActionResult> ManageLogins(ManageMessageId? message = null)
@@ -338,6 +339,7 @@ namespace Budget.Web.Controllers
             }
             return RedirectToAction(nameof(ManageLogins), new { Message = message });
         }
+        */
 
         #region Helpers
 
