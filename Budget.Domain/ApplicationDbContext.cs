@@ -12,6 +12,7 @@ namespace Budget.Domain
         }
 
         public DbSet<AllowanceTask> AllowanceTasks { get; set; }
+        public DbSet<Entry> Entries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

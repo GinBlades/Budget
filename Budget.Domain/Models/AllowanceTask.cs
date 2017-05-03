@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Budget.Domain.Models
 {
@@ -14,6 +9,16 @@ namespace Budget.Domain.Models
         [Required, MaxLength(120)]
         public string Title { get; set; }
         public string Description { get; set; }
+        public string Reward { get; set; }
+
+        // Using binary to set days.
+        // Monday = 0b1, Friday = 0b100_0000
+        // To get binary from int: 'Convert.ToString(105, 2)' = '1101001'
+        // To get int from binary string: 'Convert.ToInt32("1101", 2)'
+        public int Days { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         [Required, MaxLength(450)]
         public string UserId { get; set; }
