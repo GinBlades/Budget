@@ -7,6 +7,7 @@
     concat = require("gulp-concat"),
     sass = require("gulp-sass"),
     uglify = require("gulp-uglify"),
+    webpackStream = require("webpack-stream"),
     gulpWebpack = require("gulp-webpack");
 
 
@@ -16,17 +17,17 @@ var appDir = "../Budget.Web/wwwroot/";
 
 gulp.task("pack", function () {
     return gulp.src(scriptEP)
-        .pipe(gulpWebpack({
+        .pipe(webpackStream({
             output: {
                 filename: "main.js"
             },
             module: {
-                loaders: [
+                rules: [
                     { test: /\.tsx?$/, loader: "ts-loader" }
                 ]
             },
             resolve: {
-                extensions: [".ts", ".tsx", ".js", ""]
+                extensions: [".ts", ".tsx", ".js"]
             },
             plugins: [
                 new webpack.ProvidePlugin({
@@ -34,7 +35,7 @@ gulp.task("pack", function () {
                     jQuery: "jquery"
                 })
             ]
-        }))
+        }, webpack))
         // .pipe(uglify())
         .pipe(gulp.dest(appDir + "js"))
 });
