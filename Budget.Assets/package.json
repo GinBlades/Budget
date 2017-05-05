@@ -3,6 +3,8 @@
   "name": "mypackage",
   "private": true,
   "devDependencies": {
+    "@types/bootstrap": "^3.3.33",
+    "@types/jquery": "^2.0.42",
     "bootstrap-sass": "^3.3.7",
     "bower": "^1.8.0",
     "gulp": "^3.9.1",
@@ -13,9 +15,14 @@
     "gulp-tslint": "^8.0.0",
     "gulp-typescript": "^3.1.6",
     "gulp-uglify": "^2.1.2",
+    "gulp-webpack": "^1.5.0",
     "jquery": "^3.2.1",
     "node-sass": "^4.5.2",
+    "ts-loader": "^2.0.3",
     "tslint": "^5.2.0",
     "typescript": "^2.3.2"
+  },
+  "dependencies": {
+    "@types/bootstrap": "^3.3.33"
   }
 }

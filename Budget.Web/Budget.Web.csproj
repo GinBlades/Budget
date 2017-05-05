@@ -37,6 +37,7 @@
     <Folder Include="Models\" />
     <Folder Include="Services\" />
     <Folder Include="wwwroot\images\" />
+    <Folder Include="wwwroot\js\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Budget.Domain\Budget.Domain.csproj" />
