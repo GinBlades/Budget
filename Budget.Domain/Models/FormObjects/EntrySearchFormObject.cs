@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Budget.Domain.Models.FormObjects
 {
+    /// <summary>
+    /// Prepare searchable fields for Entry records
+    /// </summary>
     public class EntrySearchFormObject
     {
         public string User { get; set; }

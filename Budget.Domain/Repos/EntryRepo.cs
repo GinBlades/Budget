@@ -2,7 +2,6 @@
 using Budget.Domain.Interfaces;
 using Budget.Domain.Models;
 using Budget.Domain.Models.FormObjects;
-using Budget.Domain.SearchTools;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace Budget.Domain.Repos
     // Alias for laziness
     using ExpFunc = Expression<Func<Entry, bool>>;
 
-    public class EntryRepo : IRepo<Entry, EntrySearchFormObject>
+    public class EntryRepo : ISearchableRepo<Entry, EntrySearchFormObject>
     {
         private readonly ApplicationDbContext _context;
         private readonly RepoHelper<Entry> _helper;
@@ -46,11 +45,6 @@ namespace Budget.Domain.Repos
             return await _searchTool.SearchResults(searchForm);
         }
 
-        private IQueryable<Entry> OrderHelper(IQueryable<Entry> query, Expression<Func<Entry, string>> exp, string direction)
-        {
-            return direction.ToLower() == "asc" ? query.OrderBy(exp) : query.OrderByDescending(exp);
-        }
-
         public async Task<Entry> GetOne(ExpFunc exp)
         {
             return await _dbSet.Include(e => e.User).SingleOrDefaultAsync(exp);
@@ -58,21 +52,14 @@ namespace Budget.Domain.Repos
 
         public async Task<Entry> Create<TFormObject>(TFormObject formObject, params string[] fields)
         {
-            var entry = new Entry();
-            _helper.StrongUpdate(entry, formObject, fields);
-            _dbSet.Add(entry);
+            var entry = _helper.Add(_dbSet, formObject, fields);
             await _context.SaveChangesAsync();
             return entry;
         }
 
         public async Task<Entry> Update<TFormObject>(int id, TFormObject formObject, params string[] fields)
         {
-            var entry = await _context.Entries.FindAsync(id);
-            if (entry == null)
-            {
-                throw new Exception($"Entry with ID {id} not found");
-            }
-            _helper.StrongUpdate(entry, formObject, fields);
+            var entry = await _helper.Update(_dbSet, id, formObject, fields);
             _context.Entry(entry).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return entry;
@@ -85,11 +72,7 @@ namespace Budget.Domain.Repos
 
         public async Task Delete(Entry entry)
         {
-            if (entry == null)
-            {
-                return;
-            }
-            _dbSet.Remove(entry);
+            _helper.Remove(_dbSet, entry);
             await _context.SaveChangesAsync();
         }
     }

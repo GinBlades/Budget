@@ -1,12 +1,47 @@
 ﻿using Budget.Domain.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Budget.Domain.Helpers
 {
+    /// <summary>
+    /// Adds some common helpers for Entity Framework entities with Timestamps
+    /// </summary>
+    /// <typeparam name="TEntity"></typeparam>
     public class RepoHelper<TEntity>
         where TEntity : class, IDBModelTS, new()
     {
+        public TEntity Add<TFormObject>(DbSet<TEntity> dbSet, TFormObject formObject, params string[] fields)
+        {
+            var entity = new TEntity();
+            StrongUpdate(entity, formObject, fields);
+            dbSet.Add(entity);
+            return entity;
+        }
+
+        public async Task<TEntity> Update<TFormObject>(DbSet<TEntity> dbSet, int id, TFormObject formObject, params string[] fields)
+        {
+            var entity = await dbSet.FindAsync(id);
+            if (entity == null)
+            {
+                throw new Exception($"Task with ID {id} not found");
+            }
+            StrongUpdate(entity, formObject, fields);
+            return entity;
+        }
+
+        public void Remove(DbSet<TEntity> dbSet, TEntity entity)
+        {
+            if (entity == null)
+            {
+                throw new Exception($"Entity not found, unable to remove.");
+            }
+
+            dbSet.Remove(entity);
+        }
+
         /// <summary>
         /// Check if updating or creating based on Id presence
         /// </summary>

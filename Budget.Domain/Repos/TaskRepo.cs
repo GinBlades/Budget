@@ -4,49 +4,65 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Budget.Domain.Interfaces;
 using Budget.Domain.Models;
+using Budget.Domain.Helpers;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Budget.Domain.Repos
 {
     public class TaskRepo : IRepo<AllowanceTask>
     {
-        public Task<AllowanceTask> Create<TFormObject>(TFormObject formObject, params string[] fields)
+        private readonly ApplicationDbContext _context;
+        private readonly RepoHelper<AllowanceTask> _helper;
+        private readonly DbSet<AllowanceTask> _dbSet;
+
+        public TaskRepo(ApplicationDbContext context, RepoHelper<AllowanceTask> helper)
         {
-            throw new NotImplementedException();
+            _context = context;
+            _helper = helper;
+            _dbSet = context.AllowanceTasks;
         }
 
-        public Task Delete(int id)
+        public async Task<List<AllowanceTask>> GetList()
         {
-            throw new NotImplementedException();
+            return await GetList(_ => 1 == 1);
         }
 
-        public Task Delete(AllowanceTask entity)
+        public async Task<List<AllowanceTask>> GetList(Expression<Func<AllowanceTask, bool>> exp)
         {
-            throw new NotImplementedException();
+            return await _dbSet.Include(e => e.User).Where(exp).ToListAsync();
         }
 
-        public Task<List<AllowanceTask>> GetList()
+        public async Task<AllowanceTask> GetOne(Expression<Func<AllowanceTask, bool>> exp)
         {
-            throw new NotImplementedException();
+            return await _dbSet.Include(e => e.User).SingleOrDefaultAsync(exp);
         }
 
-        public Task<List<AllowanceTask>> GetList(Expression<Func<AllowanceTask, bool>> exp)
+        public async Task<AllowanceTask> Create<TFormObject>(TFormObject formObject, params string[] fields)
         {
-            throw new NotImplementedException();
+            var task = _helper.Add(_dbSet, formObject, fields);
+            await _context.SaveChangesAsync();
+            return task;
         }
 
-        public Task<List<AllowanceTask>> GetList(Dictionary<string, object> searchDictionary)
+        public async Task<AllowanceTask> Update<TFormObject>(int id, TFormObject formObject, params string[] fields)
         {
-            throw new NotImplementedException();
+            var task = await _helper.Update(_dbSet, id, formObject, fields);
+            _context.Entry(task).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return task;
         }
 
-        public Task<AllowanceTask> GetOne(Expression<Func<AllowanceTask, bool>> exp)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            await Delete(await _dbSet.FindAsync(id));
         }
 
-        public Task<AllowanceTask> Update<TFormObject>(int id, TFormObject formObject, params string[] fields)
+        public async Task Delete(AllowanceTask task)
         {
-            throw new NotImplementedException();
+            _helper.Remove(_dbSet, task);
+            await _context.SaveChangesAsync();
         }
+
     }
 }

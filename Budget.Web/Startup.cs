@@ -52,7 +52,7 @@ namespace Budget.Web
 
             services.AddTransient(typeof(RepoHelper<>));
             services.AddScoped<ISearchTool<Entry, EntrySearchFormObject>, EntrySearch>();
-            services.AddScoped<IRepo<Entry, EntrySearchFormObject>, EntryRepo>();
+            services.AddScoped<ISearchableRepo<Entry, EntrySearchFormObject>, EntryRepo>();
             services.AddScoped<IRepo<AllowanceTask>, TaskRepo>();
 
             // Add application services.

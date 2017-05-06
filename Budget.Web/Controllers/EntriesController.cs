@@ -13,10 +13,10 @@ namespace Budget.Web.Controllers
     public class EntriesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IRepo<Entry, EntrySearchFormObject> _repo;
+        private readonly ISearchableRepo<Entry, EntrySearchFormObject> _repo;
         private readonly string[] _strongParams = new string[] { "Payee", "Category", "Notes", "Price", "EntryDate", "UserId" };
 
-        public EntriesController(ApplicationDbContext context, IRepo<Entry, EntrySearchFormObject> repo)
+        public EntriesController(ApplicationDbContext context, ISearchableRepo<Entry, EntrySearchFormObject> repo)
         {
             _context = context;
             _repo = repo;

@@ -33,7 +33,7 @@ namespace Budget.Domain.SearchTools
                 .CheckField(searchForm.Category, e => e.Category.ToLower().Contains(searchForm.Category.ToLower()))
                 .CheckField(searchForm.Notes, e => e.Notes.ToLower().Contains(searchForm.Notes.ToLower()))
                 .CheckField(searchForm.FromDate, e => e.EntryDate >= searchForm.FromDate)
-                .CheckField(searchForm.ToDate, e => e.EntryDate >= searchForm.ToDate);
+                .CheckField(searchForm.ToDate, e => e.EntryDate <= searchForm.ToDate);
 
             if (searchForm.OrderBy != null)
             {
