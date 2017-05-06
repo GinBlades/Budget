@@ -11,6 +11,8 @@ using Budget.Identity.Services;
 using Budget.Domain.Repos;
 using Budget.Domain.Helpers;
 using Budget.Domain.Interfaces;
+using Budget.Domain.Models.FormObjects;
+using Budget.Domain.SearchTools;
 
 namespace Budget.Web
 {
@@ -49,7 +51,8 @@ namespace Budget.Web
             services.AddMvc();
 
             services.AddTransient(typeof(RepoHelper<>));
-            services.AddScoped<IRepo<Entry>, EntryRepo>();
+            services.AddScoped<ISearchTool<Entry, EntrySearchFormObject>, EntrySearch>();
+            services.AddScoped<IRepo<Entry, EntrySearchFormObject>, EntryRepo>();
             services.AddScoped<IRepo<AllowanceTask>, TaskRepo>();
 
             // Add application services.

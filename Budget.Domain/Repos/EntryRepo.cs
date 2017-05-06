@@ -1,6 +1,8 @@
 ﻿using Budget.Domain.Helpers;
 using Budget.Domain.Interfaces;
 using Budget.Domain.Models;
+using Budget.Domain.Models.FormObjects;
+using Budget.Domain.SearchTools;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,17 +15,19 @@ namespace Budget.Domain.Repos
     // Alias for laziness
     using ExpFunc = Expression<Func<Entry, bool>>;
 
-    public class EntryRepo : IRepo<Entry>
+    public class EntryRepo : IRepo<Entry, EntrySearchFormObject>
     {
         private readonly ApplicationDbContext _context;
         private readonly RepoHelper<Entry> _helper;
         private readonly DbSet<Entry> _dbSet;
+        private readonly ISearchTool<Entry, EntrySearchFormObject> _searchTool;
 
-        public EntryRepo(ApplicationDbContext context, RepoHelper<Entry> helper)
+        public EntryRepo(ApplicationDbContext context, RepoHelper<Entry> helper, ISearchTool<Entry, EntrySearchFormObject> searchTool)
         {
             _context = context;
             _helper = helper;
             _dbSet = _context.Entries;
+            _searchTool = searchTool;
         }
 
         public async Task<List<Entry>> GetList()
@@ -37,40 +41,14 @@ namespace Budget.Domain.Repos
             return await _dbSet.Include(e => e.User).Where(exp).ToListAsync();
         }
 
-        public async Task<List<Entry>> GetList(Dictionary<string, object> searchDictionary)
+        public async Task<List<Entry>> GetList(EntrySearchFormObject searchForm)
         {
-            var query = _dbSet.AsQueryable();
-            foreach(var keyValue in searchDictionary)
-            {
-                switch (keyValue.Key)
-                {
-                    case "User":
-                        var user = keyValue.Value.ToString();
-                        query = query.Where(e => e.User.UserName.Contains(user));
-                        continue;
-                    case "Payee":
-                        var payee = keyValue.Value.ToString();
-                        query = query.Where(e => e.Payee.Contains(payee));
-                        continue;
-                    case "Category":
-                        var category = keyValue.Value.ToString();
-                        query = query.Where(e => e.Category.Contains(category));
-                        continue;
-                    case "Notes":
-                        var notes = keyValue.Value.ToString();
-                        query = query.Where(e => e.Notes.Contains(notes));
-                        continue;
-                    case "FromDate":
-                        var fromDate = Convert.ToDateTime(keyValue.Value);
-                        query = query.Where(e => e.EntryDate >= fromDate);
-                        continue;
-                    case "ToDate":
-                        var toDate = Convert.ToDateTime(keyValue.Value);
-                        query = query.Where(e => e.EntryDate <= toDate);
-                        continue;
-                }
-            }
-            return await query.Include(e => e.User).ToListAsync();
+            return await _searchTool.SearchResults(searchForm);
+        }
+
+        private IQueryable<Entry> OrderHelper(IQueryable<Entry> query, Expression<Func<Entry, string>> exp, string direction)
+        {
+            return direction.ToLower() == "asc" ? query.OrderBy(exp) : query.OrderByDescending(exp);
         }
 
         public async Task<Entry> GetOne(ExpFunc exp)

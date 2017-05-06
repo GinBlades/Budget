@@ -5,7 +5,7 @@ using Budget.Domain;
 using Budget.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Budget.Domain.Interfaces;
-using Budget.Web.Models.FormObjects;
+using Budget.Domain.Models.FormObjects;
 
 namespace Budget.Web.Controllers
 {
@@ -13,10 +13,10 @@ namespace Budget.Web.Controllers
     public class EntriesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IRepo<Entry> _repo;
+        private readonly IRepo<Entry, EntrySearchFormObject> _repo;
         private readonly string[] _strongParams = new string[] { "Payee", "Category", "Notes", "Price", "EntryDate", "UserId" };
 
-        public EntriesController(ApplicationDbContext context, IRepo<Entry> repo)
+        public EntriesController(ApplicationDbContext context, IRepo<Entry, EntrySearchFormObject> repo)
         {
             _context = context;
             _repo = repo;
@@ -24,7 +24,7 @@ namespace Budget.Web.Controllers
 
         public async Task<IActionResult> Index(EntrySearchFormObject search)
         {
-            return View(await _repo.GetList(search.ToDictionary()));
+            return View(await _repo.GetList(search));
         }
 
         public async Task<IActionResult> Details(int? id)

@@ -22,10 +22,6 @@
     <None Remove="Models\**" />
     <None Remove="Services\**" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="Models\FormObjects\EntrySearchFormObject.cs" />
-  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
@@ -49,6 +45,7 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Models\FormObjects\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
