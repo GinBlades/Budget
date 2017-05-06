@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Budget.Domain.Interfaces;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Budget.Domain.Models
 {
-    public class Entry
+    public class Entry : IDBModelTS
     {
         public int Id { get; set; }
         public string Payee { get; set; }

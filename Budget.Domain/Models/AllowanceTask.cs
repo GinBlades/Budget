@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Budget.Domain.Interfaces;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Budget.Domain.Models
 {
-    public class AllowanceTask
+    public class AllowanceTask : IDBModelTS
     {
         public int Id { get; set; }
         [Required, MaxLength(120)]
@@ -12,7 +13,7 @@ namespace Budget.Domain.Models
         public string Reward { get; set; }
 
         // Using binary to set days.
-        // Monday = 0b1, Friday = 0b100_0000
+        // Sunday = 0b1, Saturday = 0b100_0000
         // To get binary from int: 'Convert.ToString(105, 2)' = '1101001'
         // To get int from binary string: 'Convert.ToInt32("1101", 2)'
         public int Days { get; set; }

@@ -8,6 +8,9 @@ using Microsoft.Extensions.Logging;
 using Budget.Domain;
 using Budget.Domain.Models;
 using Budget.Identity.Services;
+using Budget.Domain.Repos;
+using Budget.Domain.Helpers;
+using Budget.Domain.Interfaces;
 
 namespace Budget.Web
 {
@@ -44,6 +47,10 @@ namespace Budget.Web
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+
+            services.AddTransient(typeof(RepoHelper<>));
+            services.AddScoped<IRepo<Entry>, EntryRepo>();
+            services.AddScoped<IRepo<AllowanceTask>, TaskRepo>();
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();

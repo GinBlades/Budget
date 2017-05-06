@@ -1,41 +1,32 @@
 @model IEnumerable<Entry>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Entries";
 }
 
-<h2>Index</h2>
+<h2>
+    @ViewData["Title"]
+    <a class="btn btn-primary btn-sm" asp-action="Create">New Entry</a>
+</h2>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="row">
+    <div class="col-md-6">
+        @Html.Partial("_SearchForm")
+    </div>
+    <div class="col-md-6">
+        @Html.Partial("_BalancePanel")
+        @Html.Partial("_AllowancePanel")
+    </div>
+</div>
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Payee)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Category)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Notes)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EntryDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CreatedAt)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.UpdatedAt)
-                </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
+            <th>Payee</th>
+            <th>Category</th>
+            <th>Notes</th>
+            <th>Price</th>
+            <th>Entry Date</th>
+            <th>User</th>
             <th></th>
         </tr>
     </thead>
@@ -43,28 +34,22 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Payee)
+                @item.Payee
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Category)
+                @item.Category
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Notes)
+                @item.Notes
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @item.Price
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EntryDate)
+                @item.EntryDate.ToString("yyyy-MM-dd")
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdatedAt)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Id)
+                @item.User.UserName
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
