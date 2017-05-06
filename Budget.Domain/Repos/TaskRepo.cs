@@ -34,6 +34,11 @@ namespace Budget.Domain.Repos
             throw new NotImplementedException();
         }
 
+        public Task<List<AllowanceTask>> GetList(Dictionary<string, object> searchDictionary)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<AllowanceTask> GetOne(Expression<Func<AllowanceTask, bool>> exp)
         {
             throw new NotImplementedException();

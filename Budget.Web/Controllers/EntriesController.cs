@@ -5,6 +5,7 @@ using Budget.Domain;
 using Budget.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Budget.Domain.Interfaces;
+using Budget.Web.Models.FormObjects;
 
 namespace Budget.Web.Controllers
 {
@@ -21,9 +22,9 @@ namespace Budget.Web.Controllers
             _repo = repo;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(EntrySearchFormObject search)
         {
-            return View(await _repo.GetList());
+            return View(await _repo.GetList(search.ToDictionary()));
         }
 
         public async Task<IActionResult> Details(int? id)
