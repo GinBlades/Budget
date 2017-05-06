@@ -7,5 +7,6 @@ namespace Budget.Domain.Models
     public class ApplicationUser : IdentityUser
     {
         public ICollection<AllowanceTask> AllowanceTasks { get; set; }
+        public ICollection<Entry> Entries { get; set; }
     }
 }

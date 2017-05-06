@@ -51,6 +51,7 @@ namespace Budget.Web
             services.AddMvc();
 
             services.AddTransient(typeof(RepoHelper<>));
+            services.AddScoped<UserRepo>();
             services.AddScoped<ISearchTool<Entry, EntrySearchFormObject>, EntrySearch>();
             services.AddScoped<ISearchableRepo<Entry, EntrySearchFormObject>, EntryRepo>();
             services.AddScoped<IRepo<AllowanceTask>, TaskRepo>();

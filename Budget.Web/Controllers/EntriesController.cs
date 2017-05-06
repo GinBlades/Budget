@@ -1,25 +1,25 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Budget.Domain;
 using Budget.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Budget.Domain.Interfaces;
 using Budget.Domain.Models.FormObjects;
+using Budget.Domain.Repos;
 
 namespace Budget.Web.Controllers
 {
     [Authorize]
     public class EntriesController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly ISearchableRepo<Entry, EntrySearchFormObject> _repo;
         private readonly string[] _strongParams = new string[] { "Payee", "Category", "Notes", "Price", "EntryDate", "UserId" };
+        private readonly UserRepo _userRepo;
 
-        public EntriesController(ApplicationDbContext context, ISearchableRepo<Entry, EntrySearchFormObject> repo)
+        public EntriesController(ISearchableRepo<Entry, EntrySearchFormObject> repo, UserRepo userRepo)
         {
-            _context = context;
             _repo = repo;
+            _userRepo = userRepo;
         }
 
         public async Task<IActionResult> Index(EntrySearchFormObject search)
@@ -38,9 +38,9 @@ namespace Budget.Web.Controllers
             return View(entry);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["UserId"] = new SelectList(await _userRepo.GetList(), "Id", "UserName");
             return View();
         }
 
@@ -53,7 +53,7 @@ namespace Budget.Web.Controllers
                 await _repo.Create(entry, _strongParams);
                 return RedirectToAction("Index");
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", entry.UserId);
+            ViewData["UserId"] = new SelectList(await _userRepo.GetList(), "Id", "UserName", entry.UserId);
             return View(entry);
         }
 
@@ -64,7 +64,7 @@ namespace Budget.Web.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", entry.UserId);
+            ViewData["UserId"] = new SelectList(await _userRepo.GetList(), "Id", "UserName", entry.UserId);
             return View(entry);
         }
 
@@ -77,7 +77,7 @@ namespace Budget.Web.Controllers
                 await _repo.Update(id, entry, _strongParams);
                 return RedirectToAction("Index");
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", entry.UserId);
+            ViewData["UserId"] = new SelectList(await _userRepo.GetList(), "Id", "UserName", entry.UserId);
             return View(entry);
         }
 
