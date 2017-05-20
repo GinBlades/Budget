@@ -41,19 +41,22 @@ namespace Budget.Domain.SearchTools
                 switch (searchForm.OrderBy)
                 {
                     case "User":
-                        query.OrderHelper(e => e.User.UserName, direction);
+                        query = query.OrderHelper(e => e.User.UserName, direction);
                         break;
                     case "Payee":
-                        query.OrderHelper(e => e.Payee, direction);
+                        query = query.OrderHelper(e => e.Payee, direction);
+                        break;
+                    case "Price":
+                        query = query.OrderHelper(e => e.Price, direction);
                         break;
                     case "Category":
-                        query.OrderHelper(e => e.Category, direction);
+                        query = query.OrderHelper(e => e.Category, direction);
                         break;
                     case "Notes":
-                        query.OrderHelper(e => e.Notes, direction);
+                        query = query.OrderHelper(e => e.Notes, direction);
                         break;
                     case "EntryDate":
-                        query.OrderHelper(e => e.EntryDate, direction);
+                        query = query.OrderHelper(e => e.EntryDate, direction);
                         break;
                 }
             }

@@ -21,12 +21,24 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Payee</th>
-            <th>Category</th>
-            <th>Notes</th>
-            <th>Price</th>
-            <th>Entry Date</th>
-            <th>User</th>
+            <th>
+                <a href="@Url.AppendQueryString(Context.Request, "Payee")">Payee</a>
+            </th>
+            <th>
+                <a href="@Url.AppendQueryString(Context.Request, "Category")">Category</a>
+            </th>
+            <th>
+                <a href="@Url.AppendQueryString(Context.Request, "Notes")">Notes</a>
+            </th>
+            <th>
+                <a href="@Url.AppendQueryString(Context.Request, "Price")">Price</a>
+            </th>
+            <th>
+                <a href="@Url.AppendQueryString(Context.Request, "EntryDate")">Entry Date</a>
+            </th>
+            <th>
+                <a href="@Url.AppendQueryString(Context.Request, "User")">User</a>
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -43,7 +55,7 @@
                 @item.Notes
             </td>
             <td>
-                @item.Price
+                @item.Price.ToString("C")
             </td>
             <td>
                 @item.EntryDate.ToString("yyyy-MM-dd")

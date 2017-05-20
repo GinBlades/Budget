@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Budget.Domain.Interfaces;
 using Budget.Domain.Models.FormObjects;
 using Budget.Domain.Repos;
+using System.Linq;
+using System.Security.Claims;
 
 namespace Budget.Web.Controllers
 {
@@ -24,6 +26,8 @@ namespace Budget.Web.Controllers
 
         public async Task<IActionResult> Index(EntrySearchFormObject search)
         {
+            var userId = User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).First().Value;
+            ViewBag.User = await _userRepo.GetOne(u => u.Id == userId);
             return View(await _repo.GetList(search));
         }
 

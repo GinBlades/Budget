@@ -1,13 +1,15 @@
-﻿<div class="panel panel-default">
+﻿@model IEnumerable<Entry>
+
+<div class="panel panel-default">
     <table class="table table-striped">
         <tbody>
             <tr>
                 <th>Balance</th>
-                <td></td>
+                <td>@(ViewBag.User.Balance()?.ToString("C"))</td>
             </tr>
             <tr>
                 <th>Spending for Month</th>
-                <td></td>
+                <td>@(ViewBag.User.SpendingForMonth(DateTime.Now)?.ToString("C"))</td>
             </tr>
         </tbody>
     </table>
