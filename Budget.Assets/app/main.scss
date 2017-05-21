@@ -1,1 +1,10 @@
 ﻿@import "../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap";
+
+table#allowanceDays {
+    td {
+        &:hover {
+            cursor: pointer;
+            background-color: #337ab7;
+        }
+    }
+}

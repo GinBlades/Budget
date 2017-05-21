@@ -12,7 +12,9 @@
 
 
 var styleEP = ["app/main.scss"];
-var scriptEP = ["app/**/*.ts"];
+var scriptEP = ["app/main.ts"];
+var scripts = ["app/**/*.ts"];
+var styles = ["app/**/*.scss"];
 var appDir = "../Budget.Web/wwwroot/";
 
 gulp.task("pack", function () {
@@ -37,7 +39,7 @@ gulp.task("pack", function () {
             ]
         }, webpack))
         // .pipe(uglify())
-        .pipe(gulp.dest(appDir + "js"))
+        .pipe(gulp.dest(appDir + "js"));
 });
 
 gulp.task("copySourceMaps", function () {

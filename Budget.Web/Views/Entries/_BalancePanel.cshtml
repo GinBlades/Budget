@@ -5,7 +5,7 @@
         <tbody>
             <tr>
                 <th>Balance</th>
-                <td>@(ViewBag.User.Balance()?.ToString("C"))</td>
+                <td>@((-ViewBag.User.Balance())?.ToString("C"))</td>
             </tr>
             <tr>
                 <th>Spending for Month</th>

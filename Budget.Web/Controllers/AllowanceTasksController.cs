@@ -5,6 +5,7 @@ using Budget.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Budget.Domain.Interfaces;
 using Budget.Domain.Repos;
+using Newtonsoft.Json;
 
 namespace Budget.Web.Controllers
 {
@@ -106,6 +107,19 @@ namespace Budget.Web.Controllers
                 return null;
             }
             return await _repo.GetOne(e => e.Id == id);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddDay(int id, string day)
+        {
+            var task = await Find(id);
+            if (task == null)
+            {
+                return NotFound();
+            }
+            task.AddDays(day);
+            await _repo.Update(id, task);
+            return Content(JsonConvert.SerializeObject(task.ToDaysCompleted()), "application/json");
         }
     }
 }
