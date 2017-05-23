@@ -30,7 +30,8 @@ namespace Budget.Console
             WriteLine("What do you need to do?");
             PrintOptions();
 
-            var choice = ReadLine().Trim();
+            var input = ReadLine();
+            var choice = input.Trim();
 
             while (choice != "q")
             {

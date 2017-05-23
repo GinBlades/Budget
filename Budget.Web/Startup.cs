@@ -13,6 +13,8 @@ using Budget.Domain.Helpers;
 using Budget.Domain.Interfaces;
 using Budget.Domain.Models.FormObjects;
 using Budget.Domain.SearchTools;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Budget.Web.Extensions;
 
 namespace Budget.Web
 {
@@ -49,6 +51,11 @@ namespace Budget.Web
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+
+            services.Configure<RazorViewEngineOptions>(options =>
+            {
+                options.ViewLocationExpanders.Add(new ViewLocationExpander());
+            });
 
             services.AddTransient(typeof(RepoHelper<>));
             services.AddScoped<UserRepo>();
