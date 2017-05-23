@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="**\*.cshtml" />
     <Content Include="Views\Account\AccessDenied.cshtml">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

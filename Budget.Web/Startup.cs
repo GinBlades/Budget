@@ -56,7 +56,8 @@ namespace Budget.Web
 
             services.Configure<RazorViewEngineOptions>(options =>
             {
-                options.FileProviders.Add(new EmbeddedFileProvider(typeof(AuthMessageSender).GetTypeInfo().Assembly, "Budget.Identity"));
+                options.FileProviders.Add(new EmbeddedFileProvider(
+                    typeof(AuthMessageSender).GetTypeInfo().Assembly, "Budget.Identity"));
             });
 
             services.AddTransient(typeof(RepoHelper<>));
