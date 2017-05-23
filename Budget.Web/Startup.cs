@@ -15,6 +15,8 @@ using Budget.Domain.Models.FormObjects;
 using Budget.Domain.SearchTools;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Budget.Web.Extensions;
+using Microsoft.Extensions.FileProviders;
+using System.Reflection;
 
 namespace Budget.Web
 {
@@ -54,7 +56,7 @@ namespace Budget.Web
 
             services.Configure<RazorViewEngineOptions>(options =>
             {
-                options.ViewLocationExpanders.Add(new ViewLocationExpander());
+                options.FileProviders.Add(new EmbeddedFileProvider(typeof(AuthMessageSender).GetTypeInfo().Assembly, "Budget.Identity"));
             });
 
             services.AddTransient(typeof(RepoHelper<>));
